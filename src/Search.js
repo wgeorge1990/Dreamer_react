@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Unsplash from 'unsplash-js';
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+
 
 
 class Search extends Component {
@@ -25,14 +27,14 @@ class Search extends Component {
                      photos: json
                  })
              })
-         
     }
 
     render() {
         console.log(Carousel.props)
         return (
-            <div className="Search container grid">
-                <Carousel  className="row">
+            <div className="search">
+                < Container >
+                    <Carousel interval={2000} >
                     {this.state.photos.map(photo => {
                         return (
                             < Carousel.Item key={photo.id} >
@@ -47,8 +49,9 @@ class Search extends Component {
                                 </Carousel.Caption>
                             </Carousel.Item>
                         )
-                    })}
+                            })}
                 </Carousel>
+            </Container>
             </div>
         )
     }

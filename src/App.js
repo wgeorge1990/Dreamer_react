@@ -2,23 +2,28 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Dashboard from './Dashboard';
 import Search from './Search';
-
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Grid } from 'semantic-ui-react';
 
 class App extends Component {
   render() {
     return (
-      <Router>
-        <div className="App">
-          <header className="App-header">
-            <h1>App component</h1>
-          </header>
+      < div className = "App" >
+      <Grid columns={2} divided>
+        <Router>
+            <Grid.Row>
+               <Grid.Column>
           <Switch>
             <Route exact path='/' component={Dashboard} />
             <Route exact path='/search' component={Search} />
           </Switch>
-        </div>
-      </Router>
+        </Grid.Column>
+            <Grid.Column>
+                <Container><h1 style={{ textAlign: "center" }}>App component</h1></Container>
+            </Grid.Column>
+          </Grid.Row>
+        </Router>
+        </Grid>
+         </div>
     );
   }
 

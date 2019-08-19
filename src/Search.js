@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Unsplash from 'unsplash-js';
-import { Grid, Segment, Image, Card, Input, Form, Button, Container } from 'semantic-ui-react'
+import { Grid, Segment, Image, Card, Input, Form, Button, Container, Menu } from 'semantic-ui-react'
 
 class Search extends Component {
     constructor(props) {
@@ -68,12 +68,17 @@ class Search extends Component {
     render() {
         // let selection = this.state.photos.filter(photo => Number(photo.height) > Number(photo.width))
         return (<div>
-            <Container >
-                <Form onSubmit={this.searchTerm}>
-                    <Input fluid size='large' name="searchTerm" icon='search' placeholder="Search Term" />
-                    <Button fluid type='submit' > Search</Button>
-                </Form>
-            </Container>
+            <Menu >
+                <Form className="form" onSubmit={this.searchTerm} >
+                   <Container>
+                        <Input fluid name="searchTerm" icon='search' placeholder="Search Term" />
+                    </Container>
+                    <Container>
+                        <Button size="large" fluid  type='submit' > Search</Button>
+                   </Container>
+                    </Form>
+            </Menu>
+        
             <Grid columns={2} divided>
                 
                 <Grid.Row>
@@ -91,7 +96,9 @@ class Search extends Component {
                     {this.state.first.map(photo => 
                         <Grid.Column >
                             <Container>
-                                <Image src={photo.urls.regular} fluid />
+                                <Image
+                                    onClick={(e) => this.props.showDetail(e, photo, photo.urls.regular)}
+                                    src={photo.urls.regular} fluid />
                             </Container>
                     </Grid.Column>)}
                     </Grid>

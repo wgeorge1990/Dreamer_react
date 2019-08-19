@@ -111,7 +111,10 @@ class Search extends Component {
                     {this.state.second.map(photo => 
                         <Grid.Column >
                             <Container>
-                                <Image src={photo.urls.regular} fluid />
+                                <Image
+                                    src={photo.urls.regular} fluid
+                                    onClick={(e) => this.props.showDetail(e, photo, photo.urls.regular)}
+                                />
                             </Container>
                     </Grid.Column>)}
                     </Grid>

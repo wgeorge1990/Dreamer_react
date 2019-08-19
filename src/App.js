@@ -16,6 +16,13 @@ class App extends Component {
 
   showDetail = (event,image, imageUrl) => {
     console.log(event, image, imageUrl)
+    let array = this.state.imageDetail
+    array.push(image)
+
+    this.setState({
+      imageDetail: array,
+      imageUrl: imageUrl
+    })
   }
 
   render() {
@@ -31,15 +38,23 @@ class App extends Component {
                   <Route exact path='/search' render={() => <Search showDetail={this.showDetail}/>} />
           </Switch>
         </Grid.Column>
-            <Grid.Column>
-                <Container><h1 style={{ textAlign: "center" }}>App component</h1>
-                  <Image src={this.state.imageUrl} alt="image being focused #add prop detail for production"></Image>
-                </Container>
-            </Grid.Column>
-          </Grid.Row>
-        </Router>
-        </Grid>
-         </div>
+              <Grid.Column>
+              <Grid.Column>
+                        draggable interface
+              </Grid.Column>
+                  <Grid.Column>
+                      <Container><h1 style={{ textAlign: "center" }}>Selected</h1>
+                        {this.state.imageDetail.map(image => { return(
+                          <Image src={image.urls.regular} alt="image being focused #add prop detail for production"></Image>
+                          )
+                        })}
+                    </Container>
+                  </Grid.Column>
+          </Grid.Column>
+        </Grid.Row>
+      </Router>
+    </Grid>
+        </div>
     );
   }
 

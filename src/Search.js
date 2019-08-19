@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Unsplash from 'unsplash-js';
-import { Grid, Segment, Image, Card, Input, Form, Button } from 'semantic-ui-react'
+import { Grid, Segment, Image, Card, Input, Form, Button, Container } from 'semantic-ui-react'
 
 class Search extends Component {
     constructor(props) {
@@ -8,7 +8,9 @@ class Search extends Component {
         this.state = {
             photos: [],
             photoUrls: [],
-            searchTerm: "flowers"
+            searchTerm: "flowers",
+            first: [],
+            second: []
         }
     }
 
@@ -24,7 +26,17 @@ class Search extends Component {
                  this.setState({
                      photos: json
                  })
-             })    
+             }).then(this.splitCollectionForGrid)
+        
+    }
+
+    splitCollectionForGrid = () => {
+        let photosArray = this.state.photos;
+        let halfWayThrough = Math.floor(photosArray.length / 2)
+        let arrayFirstHalf = photosArray.slice(0, halfWayThrough);
+        let arraySecondHalf = photosArray.slice(halfWayThrough, photosArray.length);
+        this.setState({ first: arrayFirstHalf, second: arraySecondHalf})
+
     }
 
     unsplashRequest = (searchTerm) => {
@@ -40,35 +52,68 @@ class Search extends Component {
              .then(json => {
                  console.log(json.results)
                  this.setState({photos: json.results})
-             })
+             }).then(this.splitCollectionForGrid)
+        debugger
+        
         
     }
 
     searchTerm = (event) => {
         // event.preventDefault()
         // this.setState({ searchTerm: event.target.value })
-        this.unsplashRequest(event.target.value)
+        this.unsplashRequest(event.target.searchTerm.value)
+
     }
 
     render() {
         // let selection = this.state.photos.filter(photo => Number(photo.height) > Number(photo.width))
-        return (
-            <div className="Search">
-                <h1 style={{ textAlign: "center" }}>Search Images</h1>
-               <Form onSubmit={this.searchTerm}>
-                    <Input size='large' name="searchTerm" onChange={this.searchTerm} icon='search' placeholder="Search Term" />
-                    <Button type='submit' > Search</Button>
+        return (<div>
+            <Container >
+                <Form onSubmit={this.searchTerm}>
+                    <Input fluid size='large' name="searchTerm" icon='search' placeholder="Search Term" />
+                    <Button fluid type='submit' > Search</Button>
                 </Form>
-                <Card.Group itemsPerRow={3}>
+            </Container>
+            <Grid columns={2} divided>
+                
+                <Grid.Row>
+                <Grid.Column>
+               
+                {/* <Card.Group itemsPerRow={3}>
                     {this.state.photos.map(photo => 
                         <Card key={photo.id} >
                             < Image wrappedui='false' src={photo.urls.small} />
                             Photo by <a href={`https://unsplash.com/@${photo.user.username}?utm_source=your_app_name&utm_medium=referral`}>{photo.user.first_name + ' ' + photo.user.last_name}</a> on <a href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral">Unsplash</a>
                         </Card>
                     )}
-                    </Card.Group>
-                
+                    </Card.Group> */}
+                <Grid container fluid columns={1}>
+                    {this.state.first.map(photo => 
+                        <Grid.Column >
+                            <Container>
+                                <Image src={photo.urls.regular} fluid />
+                            </Container>
+                    </Grid.Column>)}
+                    </Grid>
+
+                    
+                    </Grid.Column>
+                    
+                    <Grid.Column>
+                            <Grid container fluid columns={1}>
+                    {this.state.second.map(photo => 
+                        <Grid.Column >
+                            <Container>
+                                <Image src={photo.urls.regular} fluid />
+                            </Container>
+                    </Grid.Column>)}
+                    </Grid>
+                    </Grid.Column>
+            </Grid.Row >
+            </Grid>
             </div>
+                
+           
         )
     }
 }

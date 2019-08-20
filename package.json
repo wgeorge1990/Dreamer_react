@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "dotenv": "^8.0.0",
+    "fs": "^0.0.1-security",
+    "inspector": "^0.5.0",
+    "lodash": "^4.17.15",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
@@ -32,5 +35,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "add": "^2.0.6",
+    "react-grid-layout": "^0.16.6"
   }
 }

@@ -9,8 +9,7 @@ body {
 }
 
 .react-grid-layout {
-    background: #eee;
-    /* background-image: url('https://images.unsplash.com/photo-1566157356740-9dfc98ec5830?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjg2OTA3fQ') */
+    background: rgb(173, 187, 158);
 }
 
 .layoutJSON {
@@ -27,7 +26,6 @@ body {
 }
 
 .react-grid-item {
-    /* background-image: url('https://images.unsplash.com/photo-1566157356740-9dfc98ec5830?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjg2OTA3fQ'); */
     box-sizing: border-box;
 }
 
@@ -37,11 +35,11 @@ body {
 }
 
 .react-grid-item.resizing {
-    opacity: 0.9;
+    opacity: 0.7;
 }
 
 .react-grid-item.static {
-    background: #cce;
+    background: rgb(154, 154, 213);
 }
 
 .react-grid-item .text {

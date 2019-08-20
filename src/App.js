@@ -11,7 +11,7 @@ class App extends Component {
     super(props)
     this.state = {
       imageDetail: [],
-      imageObject: [],
+      imageObject: null,
       imageUrl: "https://images.unsplash.com/photo-1566157356740-9dfc98ec5830?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjg2OTA3fQ"
     }
   }
@@ -26,8 +26,10 @@ class App extends Component {
       imageUrl: imageUrl,
       imageObject: image
     })
-  }
 
+
+  }
+  
   render() {
     return (
       < Router >
@@ -41,17 +43,20 @@ class App extends Component {
           </Switch>
         </Grid.Column>
               <Grid.Column>
+                <Container>
+                  {/* <h1 style={{ textAlign: "center" }}>Selected</h1> */}
+                        {/* {this.state.imageDetail.map(image => { return(
+                          <Image centered size="medium" style={{"height": "200px"}} src={image.urls.regular} bordered alt="image being focused #add prop detail for production"></Image>
+                          )
+                        })} */}
+                          {this.state.imageObject != null ? <Image centered size="medium" style={{"height": "200px"}} src={this.state.imageObject.urls.regular} bordered alt="image being focused #add prop detail for production"></Image> : null}
+
+                    </Container>
               <Grid.Column>
-                        draggable interface
                 <MyResponsiveGrid image={this.state.imageUrl} imageDetail={this.state.imageDetail}/>
               </Grid.Column>
                   <Grid.Column>
-                      <Container><h1 style={{ textAlign: "center" }}>Selected</h1>
-                        {this.state.imageDetail.map(image => { return(
-                          <Image src={image.urls.regular} alt="image being focused #add prop detail for production"></Image>
-                          )
-                        })}
-                    </Container>
+
                   </Grid.Column>
           </Grid.Column>
         </Grid.Row>

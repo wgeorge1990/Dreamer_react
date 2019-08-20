@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Image, Container } from 'semantic-ui-react'
+import { Image, Container, Button } from 'semantic-ui-react'
 import _ from "lodash";
 import { Responsive, WidthProvider, GridItem } from "react-grid-layout";
 import { thisTypeAnnotation, thisExpression } from "@babel/types";
@@ -8,30 +8,32 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
 export default class ShowcaseLayout extends React.Component {
-  constructor(props) {
-      super(props);
-    this.state = {
-      currentBreakpoint: "lg",
-      compactType: "Horizontal",
-        mounted: false,
-        layouts: { lg: props.initialLayout }
-    };
+    constructor(props) {
+        super(props);
 
-    this.onBreakpointChange = this.onBreakpointChange.bind(this);
-    this.onCompactTypeChange = this.onCompactTypeChange.bind(this);
-    this.onLayoutChange = this.onLayoutChange.bind(this);
-    // this.onNewLayout = this.onNewLayout.bind(this);
-  }
+        
+            
+
+            this.state = {
+                currentBreakpoint: "lg",
+                compactType: "vertical",
+                mounted: false,
+                layouts: { lg: props.initialLayout }
+            };
+
+        this.onBreakpointChange = this.onBreakpointChange.bind(this);
+        this.onCompactTypeChange = this.onCompactTypeChange.bind(this);
+        this.onLayoutChange = this.onLayoutChange.bind(this);
+        // this.onNewLayout = this.onNewLayout.bind(this);
+    }
 
     generateDOM = (lg) => {
         console.log(lg)
         return _.map(lg, function (l, i) {
-        
         return (
             <Container  key={i} className={"imageCard"}>
                 <Image src={l.url} style={{'height': '100%', 'width' : '100%'}}/>
-    
-        </Container>
+            </Container >
       );
     });
     }
@@ -68,12 +70,13 @@ export default class ShowcaseLayout extends React.Component {
         console.log(this.state.layouts)
         let array = this.state.layouts.lg
         console.log(array)
+
         array.push({
             
-                x: 10,
-                y: 10,
-                w: 10,
-                h: 10,
+                x: 2,
+                y: 7,
+                w: 6,
+                h: 7,
                 url: url
                 
                 
@@ -89,27 +92,16 @@ export default class ShowcaseLayout extends React.Component {
  
     return (
       <div>
-        <div>
-          Current Breakpoint: {this.state.currentBreakpoint} ({
-            this.props.cols[this.state.currentBreakpoint]
-          }{" "}
-          columns)
-        </div>
-        <div>
-          Compaction type:{" "}
-          {_.capitalize(this.state.compactType) || "No Compaction"}
-        </div>
-        <button onClick={this.onNewLayout}>Generate New Layout</button>
-        <button onClick={(e) => this.addToLayout(e, this.props.image)}>
-          add new board
-        </button>
+        <Button fluid onClick={(e) => this.addToLayout(e, this.props.image)}>
+          Add Image Tile
+        </Button>
             <ResponsiveReactGridLayout
                 image={this.props.image}
                 layouts={this.state.layouts}
                 onBreakpointChange={this.onBreakpointChange}
                 onLayoutChange={this.onLayoutChange}
                 // WidthProvider option
-                measureBeforeMount={false}
+                measureBeforeMount={true}
                 // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
                 // and set `measureBeforeMount={true}`.
                 useCSSTransforms={this.state.mounted}
@@ -129,16 +121,10 @@ ShowcaseLayout.propTypes = {
 
 ShowcaseLayout.defaultProps = {
   className: "layout",
-  rowHeight: 30,
+    rowHeight: 30,
   onLayoutChange: function() {},
-  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-    initialLayout: [{
-                x: 10,
-                y: 10,
-                w: 10,
-                h: 10,
-                url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSC4HhkgiLVYi4Fe92vCps6_FRFyLqRhfRaS62ogbBPGhhhfgQOQ'
-                }]
+  cols: { lg: 12, lg:12, md: 10, sm: 6, xs: 4, xxs: 2 },
+    initialLayout: []
 
 };
 

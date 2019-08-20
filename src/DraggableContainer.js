@@ -23,7 +23,7 @@ class DraggableContainer extends React.Component {
   render() {
     return (
       <div>
-        <ShowcaseLayout image={this.props.image} imageUrl={this.state.imageUrl} imageDetail={this.props.imageDetail} onLayoutChange={this.onLayoutChange} />
+        <ShowcaseLayout image={this.props.image} imageUrl={this.props.image} imageDetail={this.props.imageDetail} onLayoutChange={this.onLayoutChange} />
       </div>
     );
   }

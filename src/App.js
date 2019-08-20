@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Dashboard from './Dashboard';
 import Search from './Search';
 import { Container, Grid, Image } from 'semantic-ui-react';
-import DraggableContainer from './DraggableContainer'
 import MyResponsiveGrid from './DraggableContainer';
 
 
@@ -34,8 +33,6 @@ class App extends Component {
       < Router >
       < div className = "App" >
         <Grid columns={2} divided>
-        
-        
             <Grid.Row>
                <Grid.Column>
           <Switch>

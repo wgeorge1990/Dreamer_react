@@ -23,20 +23,14 @@ export default class ShowcaseLayout extends React.Component {
     // this.onNewLayout = this.onNewLayout.bind(this);
   }
 
-  componentDidMount() {
-      this.setState({ mounted: true, imageUrl: this.props.imageUrl });
-      
-  }
-
-    generateDOM = () => {
-        console.log(this.state.layouts.lg)
-        return _.map(this.state.layouts.lg, function (l, i) {
+    generateDOM = (lg) => {
+        console.log(lg)
+        return _.map(lg, function (l, i) {
         
         return (
             <Container  key={i} className={"imageCard"}>
-                <img src={this.state.layouts.lg.url}
-            height = '100%'
-            width = "100%" />
+                <Image src={l.url} style={{'height': '100%', 'width' : '100%'}}/>
+    
         </Container>
       );
     });
@@ -70,7 +64,7 @@ export default class ShowcaseLayout extends React.Component {
 //     });
 //   }
     
-    addToLayout = () => {
+    addToLayout = (event, url) => {
         console.log(this.state.layouts)
         let array = this.state.layouts.lg
         console.log(array)
@@ -80,7 +74,7 @@ export default class ShowcaseLayout extends React.Component {
                 y: 10,
                 w: 10,
                 h: 10,
-                url: this.state.imageUrl
+                url: url
                 
                 
             
@@ -106,11 +100,11 @@ export default class ShowcaseLayout extends React.Component {
           {_.capitalize(this.state.compactType) || "No Compaction"}
         </div>
         <button onClick={this.onNewLayout}>Generate New Layout</button>
-        <button onClick={this.addToLayout}>
+        <button onClick={(e) => this.addToLayout(e, this.props.image)}>
           add new board
         </button>
             <ResponsiveReactGridLayout
-                imageUrl={this.props.imageUrl}
+                image={this.props.image}
                 layouts={this.state.layouts}
                 onBreakpointChange={this.onBreakpointChange}
                 onLayoutChange={this.onLayoutChange}
@@ -122,7 +116,7 @@ export default class ShowcaseLayout extends React.Component {
                 compactType={this.state.compactType}
                 preventCollision={!this.state.compactType}
                 >   
-                {this.generateDOM()}
+                {this.generateDOM(this.state.layouts.lg, this.props.image)}
             </ResponsiveReactGridLayout>
       </div>
     );
@@ -143,7 +137,8 @@ ShowcaseLayout.defaultProps = {
                 y: 10,
                 w: 10,
                 h: 10,
-                url: 'https://images.unsplash.com/photo-1566157356740-9dfc98ec5830?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjg2OTA3fQ' }]
+                url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSC4HhkgiLVYi4Fe92vCps6_FRFyLqRhfRaS62ogbBPGhhhfgQOQ'
+                }]
 
 };
 

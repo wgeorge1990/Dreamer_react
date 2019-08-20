@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Unsplash from 'unsplash-js';
-import { Grid, Segment, Image, Card, Input, Form, Button, Container, Menu } from 'semantic-ui-react'
+import { Grid, Image, Input, Form, Button, Container, Menu } from 'semantic-ui-react'
 
 class Search extends Component {
     constructor(props) {
@@ -8,7 +8,7 @@ class Search extends Component {
         this.state = {
             photos: [],
             photoUrls: [],
-            searchTerm: "flowers",
+            searchTerm: "mountain",
             first: [],
             second: []
         }
@@ -20,11 +20,11 @@ class Search extends Component {
              secret: process.env.REACT_APP_SECRET
          });
         
-         unsplash.photos.listPhotos(2, 25, "latest")
+         unsplash.search.photos("mountain", 1, 15)
              .then(data => data.json())
              .then(json => {
                  this.setState({
-                     photos: json
+                     photos: json.results
                  })
              }).then(this.splitCollectionForGrid)
         
@@ -68,19 +68,28 @@ class Search extends Component {
     render() {
         // let selection = this.state.photos.filter(photo => Number(photo.height) > Number(photo.width))
         return (<div>
-            <Menu >
+            
                 <Form className="form" onSubmit={this.searchTerm} >
-                   <Container>
-                        <Input fluid name="searchTerm" icon='search' placeholder="Search Term" />
-                    </Container>
-                    <Container>
-                        <Button size="large" fluid  type='submit' > Search</Button>
-                   </Container>
+                   {/* <Container> */}
+                    <Input
+                        fluid
+                        name="searchTerm"
+                        icon='search'
+                        placeholder="Search Term"
+                        // style={{'width' : "31rem"}}
+                    />
+                <Button
+                            fluid
+                            style={{ 'margin-top': '6px', 'margin-bottom': '8px'}}
+                            type='submit'
+                        > 
+                            Search
+                        </Button>
+                   {/* </Container> */}
                     </Form>
-            </Menu>
+            
         
             <Grid columns={2} divided>
-                
                 <Grid.Row>
                 <Grid.Column>
                
@@ -103,25 +112,26 @@ class Search extends Component {
                     </Grid.Column>)}
                     </Grid>
 
-                    
                     </Grid.Column>
                     
                     <Grid.Column>
-                            <Grid container fluid columns={1}>
-                    {this.state.second.map(photo => 
-                        <Grid.Column >
-                            <Container>
-                                <Image
-                                    src={photo.urls.regular} fluid
-                                    onClick={(e) => this.props.showDetail(e, photo, photo.urls.regular)}
-                                />
-                            </Container>
-                    </Grid.Column>)}
-                    </Grid>
+                        <Grid container fluid columns={1}>
+                            
+                                {this.state.second.map(photo => 
+                                <Grid.Column >
+                            <       Container>
+                                        <Image
+                                            src={photo.urls.regular} fluid
+                                            onClick={(e) => this.props.showDetail(e, photo, photo.urls.regular)}
+                                        />
+                                    </Container>
+                                    </Grid.Column>)}
+                            
+                        </Grid>
                     </Grid.Column>
-            </Grid.Row >
+                    </Grid.Row >
             </Grid>
-            </div>
+        </div>
                 
            
         )

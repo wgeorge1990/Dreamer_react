@@ -31,7 +31,7 @@ class App extends Component {
       <Router>
         < div className = "App" >
             <Grid columns={2} divided>
-                <Grid.Column width={7}>
+            <Grid.Column width={7}>
                   <Switch>
                     <Route exact path='/' component={Dashboard} />
                     <Route exact path='/search' render={() => <Search imageUrl={this.state.imageUrl} showDetail={this.showDetail}/>} />
@@ -39,7 +39,7 @@ class App extends Component {
               </Grid.Column>
               
             <Grid.Column width={9}>
-                <Container>
+                < Container >
                     {this.state.imageObject != null ? <Image centered size="small" style={{"height": "200px"}} src={this.state.imageObject.urls.regular} bordered alt="image being focused #add prop detail for production"></Image> : null}
                 </Container>
                 <MyResponsiveGrid image={this.state.imageUrl} imageDetail={this.state.imageDetail} />

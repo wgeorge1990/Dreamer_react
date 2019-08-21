@@ -89,6 +89,7 @@ export default class ShowcaseLayout extends React.Component {
         return (
         <div>
                 <Button
+                    id='addButton'
                     fluid onClick={(e) => this.addToLayout(e, this.props.image)}
                     style={{'margin-top': '6px', 'margin-bottom': '8px'}}>
                     Add Image Tile

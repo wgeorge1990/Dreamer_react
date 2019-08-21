@@ -79,6 +79,7 @@ class Search extends Component {
                         // style={{'width' : "31rem"}}
                     />
                 <Button
+                            id='addButton'
                             fluid
                             style={{ 'margin-top': '6px', 'margin-bottom': '8px'}}
                             type='submit'

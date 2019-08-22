@@ -14,7 +14,7 @@ export default class ShowcaseLayout extends React.Component {
 
             this.state = {
                 currentBreakpoint: "lg",
-                compactType: "vertical",
+                compactType: "horizontal",
                 mounted: false,
                 layouts: { lg: props.initialLayout }
             };

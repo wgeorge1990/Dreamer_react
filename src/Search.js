@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Unsplash from 'unsplash-js';
-import { Grid, Image, Input, Form, Button, Container, Menu } from 'semantic-ui-react'
+import { Grid, Image, Input, Form, Button, Container} from 'semantic-ui-react'
 
 class Search extends Component {
     constructor(props) {

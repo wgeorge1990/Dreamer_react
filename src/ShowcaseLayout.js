@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Image, Container, Button, Embed, Card } from 'semantic-ui-react'
+import { Image, Button } from 'semantic-ui-react'
 import _ from "lodash";
-import { Responsive, WidthProvider, GridItem } from "react-grid-layout";
-import { thisTypeAnnotation, thisExpression } from "@babel/types";
+import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 

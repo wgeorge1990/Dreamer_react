@@ -81,7 +81,7 @@ class Search extends Component {
                 <Button
                             id='addButton'
                             fluid
-                            style={{ 'margin-top': '6px', 'margin-bottom': '8px'}}
+                            style={{ 'marginTop': '6px', 'marginBottom': '8px'}}
                             type='submit'
                         > 
                             Search
@@ -102,9 +102,9 @@ class Search extends Component {
                         </Card>
                     )}
                     </Card.Group> */}
-                <Grid container fluid columns={1}>
+                <Grid container columns={1}>
                     {this.state.first.map(photo => 
-                        <Grid.Column >
+                        <Grid.Column key={Math.random()}>
                             <Container>
                                 <Image
                                     onClick={(e) => this.props.showDetail(e, photo, photo.urls.regular)}
@@ -116,10 +116,12 @@ class Search extends Component {
                     </Grid.Column>
                     
                     <Grid.Column>
-                        <Grid container fluid columns={1}>
+                        <Grid columns={1}>
                             
                                 {this.state.second.map(photo => 
-                                <Grid.Column >
+                                < Grid.Column key = {
+                                    Math.random()
+                                } >
                             <       Container>
                                         <Image
                                             src={photo.urls.regular} fluid

@@ -4,6 +4,7 @@ import Dashboard from './Dashboard';
 import Search from './Search';
 import { Container, Grid, Image } from 'semantic-ui-react';
 import MyResponsiveGrid from './DraggableContainer';
+import { connect } from 'react-redux';
 
 
 class App extends Component {
@@ -48,8 +49,15 @@ class App extends Component {
           </div>
         </Router>
     );
-  }
-
+  } 
 }
-
-export default App;
+//imports state from store and maps them to components props
+const mapStateToProps = (state) => {
+  return {
+    count: state.count
+  }
+}
+//old export
+// export default App;
+//new export with redux store
+export default connect(mapStateToProps)(App)

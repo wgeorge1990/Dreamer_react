@@ -7,6 +7,7 @@ import MyResponsiveGrid from './DraggableContainer';
 import { connect } from 'react-redux';
 
 
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -35,7 +36,7 @@ class App extends Component {
             <Grid.Column width={7}>
                   <Switch>
                     <Route exact path='/' component={Dashboard} />
-                    <Route exact path='/search' render={() => <Search imageUrl={this.state.imageUrl} showDetail={this.showDetail}/>} />
+                    <Route exact path='/search' render={(props) => <Search imageUrl={this.state.imageUrl} showDetail={this.showDetail}/>} />
                   </Switch>
               </Grid.Column>
               

@@ -6,19 +6,22 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 
+
+
 const initialState = {
-    count: 0
+    count: 0,
+    photos: []
 }
 
 const reducer = (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
         case 'ADDTEN':
-            return {
+            return { ...state,
                 count: state.count + 10
             }
         case 'SUBTRACTTEN':
-            return {
+            return {...state,
                 count: state.count - 10
             }
     }

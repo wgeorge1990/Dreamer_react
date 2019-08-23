@@ -1,75 +1,45 @@
 import React, { Component } from 'react';
-import Unsplash from 'unsplash-js';
-import { Grid, Image, Input, Form, Button, Container} from 'semantic-ui-react'
+import { Grid, Image, Input, Form, Button, Container } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import {unsplashRequest} from './services/requests'
 
 class Search extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            photos: [],
-            photoUrls: [],
-            searchTerm: "mountain",
-            first: [],
-            second: []
-        }
     }
 
     componentDidMount() {
-         let unsplash = new Unsplash({
-             applicationId: process.env.REACT_APP_ACCESS_KEY,
-             secret: process.env.REACT_APP_SECRET
-         });
-        
-         unsplash.search.photos("mountain", 1, 15)
-             .then(data => data.json())
-             .then(json => {
-                 this.setState({
-                     photos: json.results
-                 })
-             }).then(this.splitCollectionForGrid)
-        
+        //unsplashRequest is a namedimport from services/requests
+        unsplashRequest().then(json => {
+            this.props.dispatch({type: 'FETCHPHOTOS', payload: json.results})
+        }).then(this.splitCollectionForGrid)
     }
 
     splitCollectionForGrid = () => {
-        let photosArray = this.state.photos;
-        let halfWayThrough = Math.floor(photosArray.length / 2)
-        let arrayFirstHalf = photosArray.slice(0, halfWayThrough);
-        let arraySecondHalf = photosArray.slice(halfWayThrough, photosArray.length);
-        this.setState({ first: arrayFirstHalf, second: arraySecondHalf})
-
+        let halfWayThrough = Math.floor(this.props.photos.length / 2)
+        let arrayFirstHalf = this.props.photos.slice(0, halfWayThrough);
+        let arraySecondHalf = this.props.photos.slice(halfWayThrough, this.props.photos.length);
+        this.props.dispatch({type: 'SETIMAGECONTAINERONE', payload: arrayFirstHalf})
+        this.props.dispatch({type: 'SETIMAGECONTAINERTWO', payload: arraySecondHalf})
+        // this.setState({ first: arrayFirstHalf, second: arraySecondHalf})
     }
 
-    unsplashRequest = (searchTerm) => {
-         let unsplash = new Unsplash({
-             applicationId: process.env.REACT_APP_ACCESS_KEY,
-             secret: process.env.REACT_APP_SECRET
-         });
-        let page = 1
-        let perPage = 15
-        
-         unsplash.search.photos(searchTerm, page, perPage)
-             .then(data => data.json())
-             .then(json => {
-                 console.log(json.results)
-                 this.setState({photos: json.results})
-             }).then(this.splitCollectionForGrid)
-        debugger
-        
-        
-    }
-
-    searchTerm = (event) => {
-        // event.preventDefault()
-        // this.setState({ searchTerm: event.target.value })
-        this.unsplashRequest(event.target.searchTerm.value)
-
+    onSearchChange = (event) => {
+        event.preventDefault()
+        unsplashRequest(event.target.searchTerm.value, 1, 15)
+            .then(json => {
+                this.props.dispatch({
+                    type: 'FETCHPHOTOS',
+                    payload: json.results
+                })
+            }).then(this.splitCollectionForGrid)
     }
 
     render() {
         // let selection = this.state.photos.filter(photo => Number(photo.height) > Number(photo.width))
         return (<div>
             
-                <Form className="form" onSubmit={this.searchTerm} >
+                <Form className="form" onSubmit={this.onSearchChange} >
                    {/* <Container> */}
                     <Input
                         fluid
@@ -93,22 +63,14 @@ class Search extends Component {
             <Grid columns={2} divided>
                 <Grid.Row>
                 <Grid.Column>
-               
-                {/* <Card.Group itemsPerRow={3}>
-                    {this.state.photos.map(photo => 
-                        <Card key={photo.id} >
-                            < Image wrappedui='false' src={photo.urls.small} />
-                            Photo by <a href={`https://unsplash.com/@${photo.user.username}?utm_source=your_app_name&utm_medium=referral`}>{photo.user.first_name + ' ' + photo.user.last_name}</a> on <a href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral">Unsplash</a>
-                        </Card>
-                    )}
-                    </Card.Group> */}
                 <Grid container columns={1}>
-                    {this.state.first.map(photo => 
+                    {this.props.imageContainerOne.map(photo => 
                         <Grid.Column key={Math.random()}>
                             <Container>
                                 <Image
                                     onClick={(e) => this.props.showDetail(e, photo, photo.urls.regular)}
                                     src={photo.urls.regular} fluid />
+                                Photo by <a href={`https://unsplash.com/@${photo.user.username}?utm_source=your_app_name&utm_medium=referral`}>{photo.user.first_name + ' ' + photo.user.last_name}</a> on <a href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral">Unsplash</a>
                             </Container>
                     </Grid.Column>)}
                     </Grid>
@@ -118,7 +80,7 @@ class Search extends Component {
                     <Grid.Column>
                         <Grid columns={1}>
                             
-                                {this.state.second.map(photo => 
+                                {this.props.imageContainerTwo.map(photo => 
                                 < Grid.Column key = {
                                     Math.random()
                                 } >
@@ -126,7 +88,9 @@ class Search extends Component {
                                         <Image
                                             src={photo.urls.regular} fluid
                                             onClick={(e) => this.props.showDetail(e, photo, photo.urls.regular)}
-                                        />
+                                            />
+                                        Photo by <a href={`https://unsplash.com/@${photo.user.username}?utm_source=your_app_name&utm_medium=referral`}>{photo.user.first_name + ' ' + photo.user.last_name}</a> on <a href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral">Unsplash</a>
+
                                     </Container>
                                     </Grid.Column>)}
                             
@@ -135,13 +99,22 @@ class Search extends Component {
                     </Grid.Row >
             </Grid>
         </div>
-                
-           
         )
     }
 }
 
-export default Search
+//imports state from store and maps them to components props
+const mapStateToProps = (state) => {
+    return {
+        count: state.count,
+        photos: state.photos,
+        imageUrl: state.imageUrl,
+        imageContainerOne: state.imageContainerOne,
+        imageContainerTwo: state.imageContainerTwo
+    }
+}
+
+export default connect(mapStateToProps)(Search)
 
 
 

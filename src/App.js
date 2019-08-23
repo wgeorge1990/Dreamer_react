@@ -12,22 +12,24 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      imageDetail: [],
-      imageObject: null,
       imageUrl: ""
     }
   }
 
   showDetail = (e ,image, imageUrl) => {
-    let array = this.state.imageDetail
-    array.push(image)
     this.setState({
-      imageDetail: array,
-      imageUrl: imageUrl,
-      imageObject: image
+      imageUrl: imageUrl
     })
   }
-  
+
+  addTen = () => {
+    this.props.dispatch({type: 'ADDTEN'})
+  }
+   
+  componentDidMount() {
+    this.addTen()
+  }
+
   render() {
     return (
       <Router>
@@ -42,7 +44,7 @@ class App extends Component {
               
             <Grid.Column width={9}>
                 < Container >
-                    {this.state.imageObject != null ? <Image centered size="small" style={{"height": "200px"}} src={this.state.imageObject.urls.regular} bordered alt="image being focused #add prop detail for production"></Image> : null}
+                    {this.state.imageUrl != "" ? <Image centered size="small" style={{"height": "200px"}} src={this.state.imageUrl} bordered alt="image being focused #add prop detail for production"></Image> : null}
                 </Container>
                 <MyResponsiveGrid image={this.state.imageUrl} imageDetail={this.state.imageDetail} />
               </Grid.Column>
@@ -55,7 +57,9 @@ class App extends Component {
 //imports state from store and maps them to components props
 const mapStateToProps = (state) => {
   return {
-    count: state.count
+    count: state.count,
+    photos: state.photos,
+    imageUrl: state.imageUrl
   }
 }
 //old export

@@ -3,36 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import theStore from './store'
 import { Provider } from 'react-redux';
-import { createStore } from 'redux'
-
-
-
-const initialState = {
-    count: 0,
-    photos: []
-}
-
-const reducer = (state = initialState, action) => {
-    console.log(action)
-    switch (action.type) {
-        case 'ADDTEN':
-            return { ...state,
-                count: state.count + 10
-            }
-        case 'SUBTRACTTEN':
-            return {...state,
-                count: state.count - 10
-            }
-    }
-    return state
-}
-    
-const store = createStore(reducer)
-
 ReactDOM.render(
     (
-        <Provider store={store} >
+        <Provider store={theStore} >
             <App />
         </Provider >
     ), document.getElementById('root'));

@@ -16,9 +16,9 @@ class Search extends Component {
     }
 
     splitCollectionForGrid = () => {
-        let halfWayThrough = Math.floor(this.props.photos.length / 2)
-        let arrayFirstHalf = this.props.photos.slice(0, halfWayThrough);
-        let arraySecondHalf = this.props.photos.slice(halfWayThrough, this.props.photos.length);
+        let halfWayThrough = Math.floor(this.props.images.photos.length / 2)
+        let arrayFirstHalf = this.props.images.photos.slice(0, halfWayThrough);
+        let arraySecondHalf = this.props.images.photos.slice(halfWayThrough, this.props.images.photos.length);
         this.props.dispatch({type: 'SETIMAGECONTAINERONE', payload: arrayFirstHalf})
         this.props.dispatch({type: 'SETIMAGECONTAINERTWO', payload: arraySecondHalf})
         // this.setState({ first: arrayFirstHalf, second: arraySecondHalf})
@@ -64,7 +64,7 @@ class Search extends Component {
                 <Grid.Row>
                 <Grid.Column>
                 <Grid container columns={1}>
-                    {this.props.imageContainerOne.map(photo => 
+                    {this.props.images.imageContainerOne.map(photo => 
                         <Grid.Column key={Math.random()}>
                             <Container>
                                 <Image
@@ -80,7 +80,7 @@ class Search extends Component {
                     <Grid.Column>
                         <Grid columns={1}>
                             
-                                {this.props.imageContainerTwo.map(photo => 
+                                {this.props.images.imageContainerTwo.map(photo => 
                                 < Grid.Column key = {
                                     Math.random()
                                 } >
@@ -106,11 +106,12 @@ class Search extends Component {
 //imports state from store and maps them to components props
 const mapStateToProps = (state) => {
     return {
-        count: state.count,
-        photos: state.photos,
-        imageUrl: state.imageUrl,
-        imageContainerOne: state.imageContainerOne,
-        imageContainerTwo: state.imageContainerTwo
+        // count: state.count,
+        // photos: state.photos,
+        // imageUrl: state.imageUrl,
+        // imageContainerOne: state.imageContainerOne,
+        // imageContainerTwo: state.imageContainerTwo
+        images: state.images
     }
 }
 

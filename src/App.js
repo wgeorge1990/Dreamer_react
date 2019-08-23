@@ -6,20 +6,19 @@ import { Container, Grid, Image } from 'semantic-ui-react';
 import MyResponsiveGrid from './DraggableContainer';
 import { connect } from 'react-redux';
 
-
-
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      imageUrl: ""
-    }
   }
 
   showDetail = (e ,image, imageUrl) => {
     this.setState({
       imageUrl: imageUrl
     })
+    this.props.dispatch({
+      type: 'SETIMAGEURL', payload: imageUrl
+    })
+
   }
 
   addTen = () => {
@@ -38,15 +37,14 @@ class App extends Component {
             <Grid.Column width={7}>
                   <Switch>
                     <Route exact path='/' component={Dashboard} />
-                    <Route exact path='/search' render={(props) => <Search imageUrl={this.state.imageUrl} showDetail={this.showDetail}/>} />
+                    <Route exact path='/search' render={(props) => <Search imageUrl={this.props.images.imageUrl} showDetail={this.showDetail}/>} />
                   </Switch>
               </Grid.Column>
-              
             <Grid.Column width={9}>
                 < Container >
-                    {this.state.imageUrl != "" ? <Image centered size="small" style={{"height": "200px"}} src={this.state.imageUrl} bordered alt="image being focused #add prop detail for production"></Image> : null}
+                    {this.props.images.imageUrl != "" ? <Image centered size="small" style={{"height": "200px"}} src={this.props.images.imageUrl} bordered alt="image being focused #add prop detail for production"></Image> : null}
                 </Container>
-                <MyResponsiveGrid image={this.state.imageUrl} imageDetail={this.state.imageDetail} />
+                <MyResponsiveGrid image={this.props.images.imageUrl} />
               </Grid.Column>
             </Grid>
           </div>
@@ -57,9 +55,7 @@ class App extends Component {
 //imports state from store and maps them to components props
 const mapStateToProps = (state) => {
   return {
-    count: state.count,
-    photos: state.photos,
-    imageUrl: state.imageUrl
+    images: state.images
   }
 }
 //old export

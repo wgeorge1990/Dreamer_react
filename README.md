@@ -1,5 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
+## Dreamer Board
+An app where you can add and arrange images into a dream board.
 ## Available Scripts
 
 In the project directory, you can run:

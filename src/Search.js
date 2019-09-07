@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import { unsplashRequest } from './services/requests'
 
 class Search extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     componentDidMount() {
         //unsplashRequest is a namedimport from services/requests
         unsplashRequest().then(json => {

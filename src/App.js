@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import Dashboard from './Dashboard';
 import Search from './Search';
 import { Container, Grid, Image } from 'semantic-ui-react';
 import MyResponsiveGrid from './DraggableContainer';
 import { connect } from 'react-redux';
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-  }
+
 
   showDetail = (e ,image, imageUrl) => {
     this.setState({
@@ -36,13 +33,12 @@ class App extends Component {
             <Grid columns={2} divided>
             <Grid.Column width={7}>
                   <Switch>
-                    <Route exact path='/' component={Dashboard} />
-                    <Route exact path='/search' render={(props) => <Search imageUrl={this.props.images.imageUrl} showDetail={this.showDetail}/>} />
+                    <Route exact path='/' render={(props) => <Search imageUrl={this.props.images.imageUrl} showDetail={this.showDetail}/>} />
                   </Switch>
               </Grid.Column>
             <Grid.Column width={9}>
                 < Container >
-                    {this.props.images.imageUrl != "" ? <Image centered size="small" style={{"height": "200px"}} src={this.props.images.imageUrl} bordered alt="image being focused #add prop detail for production"></Image> : null}
+                    {this.props.images.imageUrl !== "" ? <Image centered size="small" style={{"height": "200px"}} src={this.props.images.imageUrl} bordered alt="image being focused #add prop detail for production"></Image> : null}
                 </Container>
                 <MyResponsiveGrid image={this.props.images.imageUrl} />
               </Grid.Column>
